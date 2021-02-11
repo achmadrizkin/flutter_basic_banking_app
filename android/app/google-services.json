@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "838975404526",
+    "project_id": "transaction-app-f7993",
+    "storage_bucket": "transaction-app-f7993.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:838975404526:android:9422f16150b0c5136536ff",
+        "android_client_info": {
+          "package_name": "com.example.transaction_banking_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "838975404526-54c2p3cuq1rsfj8b1eo99dm9kplhcrdn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClPXN_BayvK2rmhhiHl_7cEqeGph7SMs8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "838975404526-54c2p3cuq1rsfj8b1eo99dm9kplhcrdn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
