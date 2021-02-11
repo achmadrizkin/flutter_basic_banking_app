@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:transaction_banking_app/ui/addTransactionCostumer.dart';
 import 'package:awesome_card/awesome_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -62,9 +61,6 @@ class _HomePageState extends State<HomePage> {
                       Icons.euro,
                       color: Colors.black,
                     ),
-                    // focusColor: Colors.white,
-                    // hoverColor: Colors.white,
-                    // fillColor: Colors.white,
                   ),
                   validator: (val) {
                     if (val.isEmpty) {
@@ -74,7 +70,6 @@ class _HomePageState extends State<HomePage> {
                   },
                   onChanged: (val) {
                     transfer2Costumer = val;
-                    // balanceController.text = _val;
                   },
                 ),
               ),
@@ -87,18 +82,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 FlatButton(
                   onPressed: () {
-                    // Collection     |     Document    |       Field
-                    //  Costumer      |   snofnsdifone  | name: Achmad Rizki
-                    //                                  | email: fauzie.rz@gmail.com
-                    //                                  | balance: 9999999
-
-                    // contoh ADD DATA
-                    // add dari collection [Costumer] => [Document][Field][balance]
-                    // db.collection('costumer').add({'balance': transfer2Costumer});
-
-                    // Validation
                     if (formKey.currentState.validate()) {
-                      // UPDATE DATA
                       db.collection('costumer').doc(ds.id).update({
                         'balance': transfer2Costumer ?? 0,
                       });
@@ -141,55 +125,17 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddTransactionCostumer()),
-          );
-        },
-        backgroundColor: Color(0xFF016DF7),
-        child: Icon(Icons.add),
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // Container(
-              //   width: MediaQuery.of(context).size.width,
-              //   height: MediaQuery.of(context).size.height / 3.5,
-              //   decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(20.0),
-              //       color: Colors.black),
-              //   child: StreamBuilder<DocumentSnapshot>(
-              //     stream: costumer.doc("cveFGVwtOFhKubD8MBrG").snapshots(),
-              //     builder: (_, snapshot) {
-              //       if (snapshot.hasData) {
-              //         return Column(
-              //           mainAxisAlignment: MainAxisAlignment.start,
-              //           children: [
-              //             Text('Name: ${snapshot.data.data()['name']}',
-              //                 style: TextStyle(color: Colors.white)),
-              //             Text('Email: ${snapshot.data.data()['email']}',
-              //                 style: TextStyle(color: Colors.white)),
-              //             Text('Balance: ${snapshot.data.data()['balance']}',
-              //                 style: TextStyle(color: Colors.white)),
-              //           ],
-              //         );
-              //       } else {
-              //         return Text("Loading..");
-              //       }
-              //     },
-              //   ),
-              // ),
               CreditCard(
                 cardNumber: "5450 7879 4864 7854",
                 cardExpiry: "10/25",
                 cardHolderName: "Achmad Rizki",
                 cvv: "456",
                 bankName: "Flutter Bank",
-                cardType: CardType
-                    .other, // Optional if you want to override Card Type
+                cardType: CardType.other,
                 showBackSide: false,
                 frontBackground: CardBackgrounds.black,
                 backBackground: CardBackgrounds.white,
@@ -300,7 +246,6 @@ class _HomePageState extends State<HomePage> {
                                       color: Colors.black,
                                     ),
                                     onPressed: () {
-                                      // Delete Data
                                       db
                                           .collection('costumer')
                                           .doc(ds.id)
@@ -314,13 +259,7 @@ class _HomePageState extends State<HomePage> {
                                         fontFamily: 'PoppinsReg',
                                         fontSize: 14)),
                                 onTap: () {
-                                  // -- Update Data
                                   showdialog(true, ds);
-
-                                  // ini bener juga tpi ga dynamic
-                                  // db.collection('costumer').doc(ds.id).update({
-                                  //   'balance': '1000',
-                                  // });
                                 },
                               ),
                             );
