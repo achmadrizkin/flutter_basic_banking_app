@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_card/awesome_card.dart';
+import 'package:transaction_banking_app/ui/costumerDetails.dart';
 
 class HomePage extends StatefulWidget {
   // List<DocumentSnapshot> ashiap;
@@ -16,92 +17,16 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController balanceController = TextEditingController();
 
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  showSnackbar() {
-    final snackbar = new SnackBar(
-      content: Text('Transaction Success!'),
-      duration: Duration(seconds: 2),
-    );
-    scaffoldKey.currentState.showSnackBar(snackbar);
-  }
-
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     final CollectionReference costumer = firestore.collection('costumer');
-
+    CollectionReference transactionHistory =
+        FirebaseFirestore.instance.collection('transactionHistory');
     //
     final db = FirebaseFirestore.instance;
-    String transfer2Costumer;
-
-    void showdialog(bool isUpdate, DocumentSnapshot ds) {
-      GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-      showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              title:
-                  Text("Transfer Money", style: TextStyle(color: Colors.black)),
-              content: Form(
-                key: formKey,
-                child: TextFormField(
-                  autofocus: true,
-                  keyboardType: TextInputType.number,
-                  textAlign: TextAlign.start,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    hintText: "00.00",
-                    prefixIcon: Icon(
-                      Icons.euro,
-                      color: Colors.black,
-                    ),
-                  ),
-                  validator: (val) {
-                    if (val.isEmpty) {
-                      return 'Cant be a Empty!';
-                    }
-                    return null;
-                  },
-                  onChanged: (val) {
-                    transfer2Costumer = val;
-                  },
-                ),
-              ),
-              actions: [
-                FlatButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text("Cancel", style: TextStyle(color: Colors.black)),
-                ),
-                FlatButton(
-                  onPressed: () {
-                    if (formKey.currentState.validate()) {
-                      db.collection('costumer').doc(ds.id).update({
-                        'balance': transfer2Costumer ?? 0,
-                      });
-
-                      showSnackbar();
-                      Navigator.of(context).pop();
-                    }
-                  },
-                  child:
-                      Text("Transfer", style: TextStyle(color: Colors.black)),
-                ),
-              ],
-            );
-          });
-    }
-
     return Scaffold(
       backgroundColor: Colors.white,
-      key: scaffoldKey,
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.white,
@@ -150,8 +75,7 @@ class _HomePageState extends State<HomePage> {
               ),
               //note: sync
               StreamBuilder<QuerySnapshot>(
-                stream:
-                    costumer.where("balance", isGreaterThan: '0').snapshots(),
+                stream: transactionHistory.snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Padding(
@@ -259,7 +183,15 @@ class _HomePageState extends State<HomePage> {
                                         fontFamily: 'PoppinsReg',
                                         fontSize: 14)),
                                 onTap: () {
-                                  showdialog(true, ds);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CostumerDetails(
+                                          name: '${ds['name']}',
+                                          email: '${ds['email']}'),
+                                    ),
+                                  );
+                                  // showdialog(true, ds);
                                 },
                               ),
                             );
