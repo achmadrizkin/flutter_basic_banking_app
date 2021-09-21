@@ -8,6 +8,12 @@ A Flutter app based on the responsive design of the Basic Banking Apps, created 
 - View All Costumer
 - Delete Costumer
 
+## Plugins
+- cloud_firestore: ^0.16.0
+- cupertino_icons: ^1.0.0
+- firebase_core: ^0.7.0
+- awesome_card: ^1.1.0
+
 ## Getting Started 🚀
 
 ```shell
